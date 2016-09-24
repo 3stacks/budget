@@ -1,51 +1,4 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "react-now",
-        "scope": null,
-        "escapedName": "react-now",
-        "name": "react-now",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "/Users/ron/Sites/budget"
-    ]
-  ],
-  "_from": "react-now@latest",
-  "_id": "react-now@1.0.0",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/react-now",
-  "_nodeVersion": "4.4.3",
-  "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/react-now-1.0.0.tgz_1462800037366_0.7089089034125209"
-  },
-  "_npmUser": {
-    "name": "lukeboyle",
-    "email": "luke.boyle.au@gmail.com"
-  },
-  "_npmVersion": "2.15.1",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "react-now",
-    "scope": null,
-    "escapedName": "react-now",
-    "name": "react-now",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
-  },
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_resolved": "https://registry.npmjs.org/react-now/-/react-now-1.0.0.tgz",
-  "_shasum": "9f4c1ec9ea228e6f33e8298be4883f1f13fb7c2b",
-  "_shrinkwrap": null,
-  "_spec": "react-now",
-  "_where": "/Users/ron/Sites/budget",
   "author": {
     "name": "Luke Boyle"
   },
@@ -56,15 +9,27 @@
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^1.0.0",
+    "vue": "^2.0.0-rc.7"
   },
   "description": "Quick start boilerplate for React using Babel.",
   "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.11.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-es2017": "^6.9.2",
+    "concurrently": "^2.2.0",
+    "cpx": "^1.3.2",
+    "node-sass": "^3.7.0",
+    "webpack": "^2.1.0-beta.20",
     "babel": "^6.5.2",
+    "babel-helper-vue-jsx-merge-props": "^2.0.1",
+    "babel-plugin-syntax-jsx": "^6.13.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.8.0",
+    "babel-plugin-transform-vue-jsx": "^3.1.0",
     "babel-preset-es2015": "^6.6.0",
-    "babel-preset-react": "^6.5.0",
     "babelify": "^7.3.0",
     "browserify": "^13.0.0",
     "gulp": "^3.9.1",
@@ -95,15 +60,27 @@
     }
   ],
   "name": "react-now",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://3stacks@github.com/3stacks/react-boilerplate.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "gulp watch"
+    "clean": "rm -rf dist",
+    "prepare-dirs": "mkdir dist",
+    "build": "npm run build-primer && concurrently \"npm run build-core\" \"npm run build-extra-resources\"",
+    "build-primer": "npm run clean && npm run prepare-dirs",
+    "build-core": "concurrently \"npm run build-js\" \"npm run build-html\" \"npm run build-styles\"",
+    "build-extra-resources": "npm run build-images",
+    "build-js": "webpack -d --config webpack.config.js --color --display-error-details --devtool=sourcemap",
+    "build-styles": "node-sass ./src/sass --output ./dist",
+    "build-images": "cp -a ./src/img ./dist",
+    "build-html": "cp -a ./src/html/ ./dist",
+    "watch": "npm run build && npm run watch-js & npm run watch-styles & npm run watch-images & npm run watch-html & npm run watch-fonts",
+    "watch-js": "webpack --config webpack.config.js --progress --color --display-error-details --watch --debug --output-pathinfo",
+    "watch-styles": "node-sass ./src/sass --output ./dist --watch",
+    "watch-images": "cpx \"src/img/*\" dist/img --watch -v",
+    "watch-html": "cpx \"src/html/**/*\" dist --watch -v",
+    "watch-fonts": "cpx \"src/fonts/*\" dist/fonts --watch -v"
   },
   "version": "1.0.0"
 }
