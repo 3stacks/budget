@@ -1,16 +1,5 @@
 import Vue from 'vue';
 
-function calculateRepayments(debt, repay, interest, month, interestPaid) {
-    if (debt > 0) {
-        const monthlyInterest = (debt * interest) / 12;
-        const newDebt = ((debt + monthlyInterest) - repay);
-        calculateRepayments(newDebt, repay, interest, month + 1, interestPaid + monthlyInterest);
-    } else {
-        console.log(`Debt will take ${month} months to pay off`);
-        console.log(`You will pay a total of $${parseInt(interestPaid/100)} in interest.`);
-    }
-}
-
 function calculateSavingsInAYear(savings, payment, interest, month, interestPaid) {
     if (month < 12) {
         const monthlyInterest = (savings * interest) / 12;
@@ -22,9 +11,22 @@ function calculateSavingsInAYear(savings, payment, interest, month, interestPaid
     }
 }
 
+function calculateRepayments(debt, repay, interest, month, valueSoFar) {
+    if (debt > 0) {
+        console.log('hello');
+        const monthlyInterest = (debt * interest) / 12;
+        const newDebt = ((debt + monthlyInterest) - repay);
+        calculateRepayments(newDebt, repay, interest, month + 1, {...valueSoFar, [month]: debt});
+    } else {
+        return valueSoFar;
+    }
+}
+
 function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
-    calculateRepayments(viewState.billFormData.debt, (viewState.billFormData.repay / 100), (viewState.billFormData.rate / 100), 1, 0);
+    console.log('first');
+    console.log(calculateRepayments(10, 1, 0, 1, {}));
+    // console.log(calculateRepayments(parseInt(viewState.billFormData.debt), (parseInt(viewState.billFormData.repay) / 100), (parseInt(viewState.billFormData.rate) / 100), 1, {}));
 }
 
 const viewState = {
@@ -41,13 +43,11 @@ function handleFormInputChanged(whichInput, event) {
 
 Vue.component('debt-input', {
     render(h) {
-        console.log(Object.values(this.$refs));
-
         return (
             <form ref="billForm">
                 <label style={{display: 'block'}}>
                     Current Debt
-                    <input type="number" ref="ref" value={viewState.billFormData.debt} on-change={handleFormInputChanged.bind(this, 'debt')}/>
+                    <input type="number" value={viewState.billFormData.debt} on-change={handleFormInputChanged.bind(this, 'debt')}/>
                 </label>
                 <label style={{display: 'block'}}>
                     Interest Rate
@@ -57,7 +57,7 @@ Vue.component('debt-input', {
                     Monthly Repayment
                     <input type="number" value={viewState.billFormData.repay} on-change={handleFormInputChanged.bind(this, 'repay')}/>
                 </label>
-                <button style={{display: 'block'}} on-click={handleCreditCardDebtCalculation}>
+                <button type="button" style={{display: 'block'}} on-click={handleCreditCardDebtCalculation.bind(this)}>
                     Submit
                 </button>
             </form>
