@@ -1,8 +1,30 @@
 import Vue from 'vue';
 
-function handleCreditCardDebtCalculation(currentDebt, rate = 13, monthlyRepayment, event) {
+function calculateRepayments(debt, repay, interest, month, interestPaid) {
+    if (debt > 0) {
+        const monthlyInterest = (debt * interest) / 12;
+        const newDebt = ((debt + monthlyInterest) - repay);
+        calculateRepayments(newDebt, repay, interest, month + 1, interestPaid + monthlyInterest);
+    } else {
+        console.log(`Debt will take ${month} months to pay off`);
+        console.log(`You will pay a total of $${parseInt(interestPaid/100)} in interest.`);
+    }
+}
+
+function calculateSavingsInAYear(savings, payment, interest, month, interestPaid) {
+    if (month < 12) {
+        const monthlyInterest = (savings * interest) / 12;
+        const newDebt = ((savings + monthlyInterest) + payment);
+        calculateSavingsInAYear(newDebt, repay, interest, month + 1, interestPaid + monthlyInterest);
+    } else {
+        console.log(`You will save a total of $${parseInt(savings/100)}`);
+        console.log(`You will earn a total of $${parseInt(interestPaid/100)} in interest.`);
+    }
+}
+
+function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
-    console.log((currentDebt + currentDebt * 13 / 100) - monthlyRepayment);
+    calculateRepayments(viewState.billFormData.debt, (viewState.billFormData.repay / 100), (viewState.billFormData.rate / 100), 1, 0);
 }
 
 const viewState = {
@@ -15,16 +37,17 @@ const viewState = {
 
 function handleFormInputChanged(whichInput, event) {
     viewState.billFormData[whichInput] = event.target.value;
-    console.log(viewState);
 }
 
 Vue.component('debt-input', {
     render(h) {
+        console.log(Object.values(this.$refs));
+
         return (
-            <form on-submit={handleCreditCardDebtCalculation}>
+            <form ref="billForm">
                 <label style={{display: 'block'}}>
                     Current Debt
-                    <input type="number" value={viewState.billFormData.debt} on-change={handleFormInputChanged.bind(this, 'debt')}/>
+                    <input type="number" ref="ref" value={viewState.billFormData.debt} on-change={handleFormInputChanged.bind(this, 'debt')}/>
                 </label>
                 <label style={{display: 'block'}}>
                     Interest Rate
@@ -34,7 +57,7 @@ Vue.component('debt-input', {
                     Monthly Repayment
                     <input type="number" value={viewState.billFormData.repay} on-change={handleFormInputChanged.bind(this, 'repay')}/>
                 </label>
-                <button style={{display: 'block'}} on-submit={handleCreditCardDebtCalculation}>
+                <button style={{display: 'block'}} on-click={handleCreditCardDebtCalculation}>
                     Submit
                 </button>
             </form>
