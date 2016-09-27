@@ -1,15 +1,15 @@
 import Vue from 'vue';
 import Chart from 'chart.js';
 import creditCardInput from '../components/credit-card-input.jsx';
+import savingsInput from '../components/savings-input.jsx';
 
-function calculateSavingsInAYear(savings, payment, interest, month, interestPaid) {
+function calculateSavingsInAYear(savings, payment, interest, month = 1, valueSoFar = {}) {
     if (month < 12) {
         const monthlyInterest = (savings * interest) / 12;
-        const newDebt = ((savings + monthlyInterest) + payment);
-        calculateSavingsInAYear(newDebt, repay, interest, month + 1, interestPaid + monthlyInterest);
+        const newSavings = ((savings + monthlyInterest) + payment);
+        calculateSavingsInAYear(newSavings, payment, interest, month + 1, {...valueSoFar, [month]: newSavings});
     } else {
-        console.log(`You will save a total of $${parseInt(savings/100)}`);
-        console.log(`You will earn a total of $${parseInt(interestPaid/100)} in interest.`);
+        return valueSoFar;
     }
 }
 
@@ -46,11 +46,39 @@ function handleCreditCardDebtCalculation(event) {
     })
 }
 
+function handleSavingsCalculation(event) {
+    event.preventDefault();
+    const debt = parseInt(viewState.billFormData.debt) * 100;
+    const repayment = parseInt(viewState.billFormData.repay) * 100;
+    const rate = parseInt(viewState.billFormData.rate) / 100;
+    viewState.creditRepayment = calculateRepayments(debt, repayment, rate);
+    const creditChart = new Chart(document.getElementById('savings_chart'), {
+        type: 'line',
+        data: {
+            labels: Object.keys(viewState.creditRepayment),
+            datasets: [{
+                label: 'Amount Remaining',
+                data: Object.values(viewState.creditRepayment).map(function(item) {
+                    return parseInt(item) / 100;
+                })
+            }],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            borderWidth: 1
+        }
+    })
+}
+
 const viewState = {
     billFormData: {
         debt: 0,
         rate: 0,
         repay: 0
+    },
+    savingsFormData: {
+        savings: 0,
+        rate: 0,
+        payment: 0
     },
     creditRepayment: {}
 };
@@ -71,6 +99,7 @@ const pageView = new Vue({
             <div>
                 <debt-input debt={viewState.billFormData.debt} repay={viewState.billFormData.repay} rate={viewState.billFormData.rate} handle-form-submit={handleCreditCardDebtCalculation} handle-input-changed={handleFormInputChanged}/>
                 <canvas id="chart" width="400" height="400"/>
+                <canvas id="savings_chart" width="400" height="400"/>
             </div>
         )
     }
