@@ -1,20 +1,28 @@
 export default {
+    props: [
+        'debt',
+        'rate',
+        'repay',
+        'handleInputChanged',
+        'handleFormSubmit'
+    ],
     render(h) {
+        console.log(this);
     return (
         <form ref="billForm">
             <label style={{display: 'block'}}>
                 Current Debt
-                <input type="number" value={viewState.billFormData.debt} on-change={handleFormInputChanged.bind(this, 'debt')}/>
+                <input type="number" value={this.debt} on-change={this.handleInputChanged.bind(this, 'debt')}/>
             </label>
             <label style={{display: 'block'}}>
                 Interest Rate
-                <input type="number" value={viewState.billFormData.rate} on-change={handleFormInputChanged.bind(this, 'rate')}/>
+                <input type="number" value={this.rate} on-change={this.handleInputChanged.bind(this, 'rate')}/>
             </label>
             <label style={{display: 'block'}}>
                 Monthly Repayment
-                <input type="number" value={viewState.billFormData.repay} on-change={handleFormInputChanged.bind(this, 'repay')}/>
+                <input type="number" value={this.repay} on-change={this.handleInputChanged.bind(this, 'repay')}/>
             </label>
-            <button type="button" style={{display: 'block'}} on-click={handleCreditCardDebtCalculation.bind(this)}>
+            <button type="button" style={{display: 'block'}} on-click={this.handleFormSubmit.bind(this)}>
                 Submit
             </button>
         </form>

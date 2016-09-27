@@ -2,8 +2,6 @@ import Vue from 'vue';
 import Chart from 'chart.js';
 import creditCardInput from '../components/credit-card-input.jsx';
 
-Vue.component('debt-input', creditCardInput);
-
 function calculateSavingsInAYear(savings, payment, interest, month, interestPaid) {
     if (month < 12) {
         const monthlyInterest = (savings * interest) / 12;
@@ -61,6 +59,8 @@ function handleFormInputChanged(whichInput, event) {
     viewState.billFormData[whichInput] = event.target.value;
 }
 
+Vue.component('debt-input', creditCardInput);
+
 const pageView = new Vue({
     el: '#root',
     data: {},
@@ -69,9 +69,10 @@ const pageView = new Vue({
         const h = this.$createElement;
         return (
             <div>
-                <debt-input/>
+                <debt-input debt={viewState.billFormData.debt} repay={viewState.billFormData.repay} rate={viewState.billFormData.rate} handle-form-submit={handleCreditCardDebtCalculation} handle-input-changed={handleFormInputChanged}/>
                 <canvas id="chart" width="400" height="400"/>
             </div>
         )
     }
 });
+
