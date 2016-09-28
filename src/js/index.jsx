@@ -24,7 +24,8 @@ const viewState = {
             type: 'Bill',
             value: 0
         }
-    ]
+    ],
+    editMode: false
 };
 
 const availableTypes = [
@@ -96,7 +97,6 @@ function handleDebitChanged(item, index, event) {
 }
 
 function handleAddDebitClicked() {
-    console.log('hello');
     viewState.debts.push({
         name: 'New Debit',
         type: 'Bill',
@@ -104,39 +104,78 @@ function handleAddDebitClicked() {
     });
 }
 
+function handleEditModeButtonPressed() {
+    viewState.editMode = !viewState.editMode;
+    pageView.$data.editMode = viewState.editMode;
+}
+
+function renderBillInputs(h, bill, index) {
+    return (
+        <div>
+            <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.name}/>
+            <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.value}/>
+            <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} selected={bill.type}>
+                {
+                    availableTypes.map((type) => {
+                        return <option value={type}>{type}</option>;
+                    })
+                }
+            </select>
+        </div>
+    )
+}
+
+function renderReadBill(h, bill, index) {
+    return (
+        <div>
+            <span name={`name-${index}`}>
+                {bill.name}
+            </span>
+            <span name={`value-${index}`}>
+                {bill.value}
+            </span>
+            <span name={`type-${index}`}>
+                {bill.type}
+            </span>
+        </div>
+    )
+}
+
+window.zz = viewState;
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 
 const pageView = new Vue({
     el: '#root',
-    data: {},
+    data: {
+        debts: viewState.debts,
+        editMode: viewState.editMode
+    },
     methods: {
         handleDebitChanged,
         handleCreditCardDebtCalculation,
         handleSavingsCalculation
     },
     render () {
+        console.log(this);
         const h = this.$createElement;
         return (
             <div>
+                <button on-click={handleEditModeButtonPressed}>Edit Mode</button>
                 {
-                    viewState.debts.map((item, index) => {
-                        return (
-                            <div>
-                                <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, item, index)} value={item.name}/>
-                                <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, item, index)} value={item.value}/>
-                                <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, item, index)} selected={item.type}>
-                                    {
-                                        availableTypes.map((type) => {
-                                            return <option value={type}>{type}</option>;
-                                        })
-                                    }
-                                </select>
-                            </div>
-                        );
-                    })
+                    this.$data.editMode
+                    ?
+                        <div>
+                            { this.$data.debts.map((item, index) => {
+                                return renderBillInputs(h, item, index);
+                            }) }
+                            <button on-click={handleAddDebitClicked}>Add Debit</button>
+                        </div>
+                    :
+                        this.$data.debts.map((item, index) => {
+                            return renderReadBill(h, item, index);
+                        })
                 }
-                <button on-click={handleAddDebitClicked}>Add Debit</button>
                 <credit-card-input
                     debt={viewState.billFormData.debt}
                     repay={viewState.billFormData.repay}
