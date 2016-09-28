@@ -38,6 +38,13 @@ const availableTypes = [
     'Savings'
 ];
 
+const frequencyOptions = {
+    weekly: 52,
+    biWeekly: 26,
+    monthly: 12,
+    quarterly: 3,
+};
+
 function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
     const debt = parseInt(viewState.billFormData.debt) * 100;
