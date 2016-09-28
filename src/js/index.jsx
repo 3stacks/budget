@@ -2,16 +2,8 @@ import Vue from 'vue';
 import Chart from 'chart.js';
 import creditCardInput from '../components/credit-card-input.jsx';
 import savingsInput from '../components/savings-input.jsx';
+import { calculateSavingsInAYear } from './utils/savings-utils';
 
-function calculateSavingsInAYear(savings, payment, interest, month = 1, valueSoFar = {}) {
-    if (month < 12) {
-        const monthlyInterest = (savings * interest) / 12;
-        const newSavings = ((savings + monthlyInterest) + payment);
-        calculateSavingsInAYear(newSavings, payment, interest, month + 1, {...valueSoFar, [month]: newSavings});
-    } else {
-        return valueSoFar;
-    }
-}
 
 function calculateRepayments(debt, repay, interest, month = 1, valueSoFar = {}) {
     if (debt > 0) {
