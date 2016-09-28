@@ -7,7 +7,6 @@ export default {
         'handleFormSubmit'
     ],
     render(h) {
-        console.log(this);
     return (
         <form ref="billForm">
             <label style={{display: 'block'}}>
