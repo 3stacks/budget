@@ -17,8 +17,20 @@ const viewState = {
         payment: 0
     },
     creditRepayment: {},
-    savingsAmount: {}
+    savingsAmount: {},
+    debts: [
+        {
+            name: 'New Debit',
+            type: 'Bill',
+            value: 0
+        }
+    ]
 };
+
+const availableTypes = [
+    'Bill',
+    'Savings'
+];
 
 function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
@@ -74,17 +86,57 @@ function handleSavingsFormChanged(whichInput, event) {
     viewState.savingsFormData[whichInput] = event.target.value;
 }
 
+function handleDebitChanged(item, index, event) {
+    const hyphenPosition = event.target.name.indexOf('-');
+    const whichValue = event.target.name.slice(0, hyphenPosition);
+    viewState.debts[index] = {
+        ...viewState.debts[index],
+        [whichValue]: event.target.value
+    };
+}
+
+function handleAddDebitClicked() {
+    console.log('hello');
+    viewState.debts.push({
+        name: 'New Debit',
+        type: 'Bill',
+        value: 0
+    });
+}
+
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 
 const pageView = new Vue({
     el: '#root',
     data: {},
-    methods: {},
+    methods: {
+        handleDebitChanged,
+        handleCreditCardDebtCalculation,
+        handleSavingsCalculation
+    },
     render () {
         const h = this.$createElement;
         return (
             <div>
+                {
+                    viewState.debts.map((item, index) => {
+                        return (
+                            <div>
+                                <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, item, index)} value={item.name}/>
+                                <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, item, index)} value={item.value}/>
+                                <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, item, index)} selected={item.type}>
+                                    {
+                                        availableTypes.map((type) => {
+                                            return <option value={type}>{type}</option>;
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        );
+                    })
+                }
+                <button on-click={handleAddDebitClicked}>Add Debit</button>
                 <credit-card-input
                     debt={viewState.billFormData.debt}
                     repay={viewState.billFormData.repay}
