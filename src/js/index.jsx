@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Chart from 'chart.js';
 import creditCardInput from '../components/credit-card-input.jsx';
 import savingsInput from '../components/savings-input.jsx';
+import * as localStorageManager from '@lukeboyle/local-storage-manager';
 import { calculateSavingsInAYear } from './utils/savings-utils';
 import { calculateRepayments } from './utils/debt-utils';
 
@@ -24,7 +25,7 @@ const viewState = {
 const userData = {
     income: 0,
     incomeFrequency: 'Weekly',
-    debts: [
+    debts: localStorageManager.get('userDebts') || [
         {
             name: 'New Debit',
             type: 'Bill',
@@ -106,6 +107,7 @@ function handleDebitChanged(item, index, event) {
         ...userData.debts[index],
         [whichValue]: event.target.value
     };
+    localStorageManager.set('userDebts', userData.debts);
 }
 
 function handleAddDebitClicked() {
@@ -122,40 +124,49 @@ function handleEditModeButtonPressed() {
 }
 
 function handleDeleteButtonPressed(billClickedIndex) {
-    console.log(billClickedIndex);
     userData.debts = userData.debts.filter((item, index) => {
         return billClickedIndex !== index;
     });
     pageView.$data.debts = userData.debts;
+    localStorageManager.set('userDebts', userData.debts);
 }
 
 function renderBillInputs(h, bill, index) {
     return (
-        <div>
+        <div class="bill-input">
             <button on-click={handleDeleteButtonPressed.bind(this, index)}>&times;</button>
-            <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.name}/>
-            <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.value}/>
-            <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} selected={bill.type}>
-                {
-                    availableTypes.map((type) => {
-                        return <option value={type}>{type}</option>;
-                    })
-                }
-            </select>
+            <label>
+                Bill Name
+                <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.name}/>
+            </label>
+            <label class="bill-input--value">
+                Bill Amount
+                <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.value}/>
+            </label>
+            <label>
+                Bill Type
+                <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} selected={bill.type}>
+                    {
+                        availableTypes.map((type) => {
+                            return <option value={type}>{type}</option>;
+                        })
+                    }
+                </select>
+            </label>
         </div>
     )
 }
 
 function renderReadBill(h, bill, index) {
     return (
-        <div>
-            <span name={`name-${index}`}>
+        <div class="bill">
+            <span name={`name-${index}`} class="bill--name">
                 {bill.name}
             </span>
-            <span name={`value-${index}`}>
-                {bill.value}
+            <span name={`value-${index}`} class="bill--value">
+                ${bill.value}
             </span>
-            <span name={`type-${index}`}>
+            <span name={`type-${index}`} class="bill--type">
                 {bill.type}
             </span>
         </div>
