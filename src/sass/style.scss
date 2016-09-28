@@ -12,12 +12,17 @@ body {
 }
 
 .bill-input {
+  button {
+    -webkit-appearance: none;
+    border: none;
+    background: transparent;
+    font-size: 2rem;
+  }
   label {
     display: block;
     select,
     input {
       display: block;
-      width: 100%;
       padding: 5px 15px;
       max-width: 100%;
     }
