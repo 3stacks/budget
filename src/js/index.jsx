@@ -1,8 +1,12 @@
+// Dependencies
 import Vue from 'vue';
 import Chart from 'chart.js';
+import * as localStorageManager from '@lukeboyle/local-storage-manager';
+// Components
 import creditCardInput from '../components/credit-card-input.jsx';
 import savingsInput from '../components/savings-input.jsx';
-import * as localStorageManager from '@lukeboyle/local-storage-manager';
+import bill from '../components/bill.jsx';
+// Functions
 import { calculateSavingsInAYear } from './utils/savings-utils';
 import { calculateRepayments } from './utils/debt-utils';
 
@@ -23,7 +27,9 @@ const viewState = {
 };
 
 const userData = {
-    income: 0,
+    income: [
+        0
+    ],
     incomeFrequency: 'Weekly',
     debts: localStorageManager.get('userDebts') || [
         {
@@ -31,13 +37,8 @@ const userData = {
             type: 'Bill',
             value: 0
         }
-    ]
+    ],
 };
-
-const availableTypes = [
-    'Bill',
-    'Savings'
-];
 
 const frequencyOptions = {
     weekly: 52,
@@ -131,48 +132,6 @@ function handleDeleteButtonPressed(billClickedIndex) {
     localStorageManager.set('userDebts', userData.debts);
 }
 
-function renderBillInputs(h, bill, index) {
-    return (
-        <div class="bill-input">
-            <button on-click={handleDeleteButtonPressed.bind(this, index)}>&times;</button>
-            <label>
-                Bill Name
-                <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.name}/>
-            </label>
-            <label class="bill-input--value">
-                Bill Amount
-                <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.value}/>
-            </label>
-            <label>
-                Bill Type
-                <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} selected={bill.type}>
-                    {
-                        availableTypes.map((type) => {
-                            return <option value={type}>{type}</option>;
-                        })
-                    }
-                </select>
-            </label>
-        </div>
-    )
-}
-
-function renderReadBill(h, bill, index) {
-    return (
-        <div class="bill">
-            <span name={`name-${index}`} class="bill--name">
-                {bill.name}
-            </span>
-            <span name={`value-${index}`} class="bill--value">
-                ${bill.value}
-            </span>
-            <span name={`type-${index}`} class="bill--type">
-                {bill.type}
-            </span>
-        </div>
-    )
-}
-
 if (process.NODE_ENV !== 'production') {
     window.zz = viewState;
     window.qq = userData;
@@ -180,6 +139,7 @@ if (process.NODE_ENV !== 'production') {
 
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
+Vue.component('bill', bill);
 
 const pageView = new Vue({
     el: '#root',
@@ -193,25 +153,22 @@ const pageView = new Vue({
         handleSavingsCalculation
     },
     render () {
-        console.log(this);
+        console.log(userData.debts);
         const h = this.$createElement;
         return (
             <div>
+                <div class="income">
+                    <ul>
+                    </ul>
+                </div>
                 <button on-click={handleEditModeButtonPressed}>Edit Mode</button>
-                {
-                    this.$data.editMode
-                    ?
-                        <div>
-                            { this.$data.debts.map((item, index) => {
-                                return renderBillInputs(h, item, index);
-                            }) }
-                            <button on-click={handleAddDebitClicked}>Add Debit</button>
-                        </div>
-                    :
-                        this.$data.debts.map((item, index) => {
-                            return renderReadBill(h, item, index);
-                        })
-                }
+                <bill
+                    debts={this.$data.debts}
+                    edit-mode={this.$data.editMode}
+                    handle-add-debit-clicked={handleAddDebitClicked}
+                    handle-delete-button-pressed={handleDeleteButtonPressed}
+                    handle-debit-changed={handleDebitChanged}
+                />
                 <credit-card-input
                     debt={viewState.billFormData.debt}
                     repay={viewState.billFormData.repay}
