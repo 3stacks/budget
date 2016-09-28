@@ -2,3 +2,33 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
+
+.bill-input,
+.bill {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto 15px;
+}
+
+.bill-input {
+  label {
+    display: block;
+    select,
+    input {
+      display: block;
+      width: 100%;
+      padding: 5px 15px;
+      max-width: 100%;
+    }
+  }
+  &--value {
+    position: relative;
+    &:before {
+      content: "$";
+      position: absolute;
+      top: 50%;
+      left: 5px;
+    }
+  }
+}
