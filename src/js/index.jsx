@@ -18,14 +18,19 @@ const viewState = {
     },
     creditRepayment: {},
     savingsAmount: {},
+    editMode: false
+};
+
+const userData = {
+    income: 0,
+    incomeFrequency: 'Weekly',
     debts: [
         {
             name: 'New Debit',
             type: 'Bill',
             value: 0
         }
-    ],
-    editMode: false
+    ]
 };
 
 const availableTypes = [
@@ -90,14 +95,14 @@ function handleSavingsFormChanged(whichInput, event) {
 function handleDebitChanged(item, index, event) {
     const hyphenPosition = event.target.name.indexOf('-');
     const whichValue = event.target.name.slice(0, hyphenPosition);
-    viewState.debts[index] = {
-        ...viewState.debts[index],
+    userData.debts[index] = {
+        ...userData.debts[index],
         [whichValue]: event.target.value
     };
 }
 
 function handleAddDebitClicked() {
-    viewState.debts.push({
+    userData.debts.push({
         name: 'New Debit',
         type: 'Bill',
         value: 0
@@ -141,14 +146,18 @@ function renderReadBill(h, bill, index) {
     )
 }
 
-window.zz = viewState;
+if (process.NODE_ENV !== 'production') {
+    window.zz = viewState;
+    window.qq = userData;
+}
+
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 
 const pageView = new Vue({
     el: '#root',
     data: {
-        debts: viewState.debts,
+        debts: userData.debts,
         editMode: viewState.editMode
     },
     methods: {
