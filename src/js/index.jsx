@@ -121,9 +121,18 @@ function handleEditModeButtonPressed() {
     pageView.$data.editMode = viewState.editMode;
 }
 
+function handleDeleteButtonPressed(billClickedIndex) {
+    console.log(billClickedIndex);
+    userData.debts = userData.debts.filter((item, index) => {
+        return billClickedIndex !== index;
+    });
+    pageView.$data.debts = userData.debts;
+}
+
 function renderBillInputs(h, bill, index) {
     return (
         <div>
+            <button on-click={handleDeleteButtonPressed.bind(this, index)}>&times;</button>
             <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.name}/>
             <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.value}/>
             <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} selected={bill.type}>
