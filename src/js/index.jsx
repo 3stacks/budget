@@ -3,17 +3,8 @@ import Chart from 'chart.js';
 import creditCardInput from '../components/credit-card-input.jsx';
 import savingsInput from '../components/savings-input.jsx';
 import { calculateSavingsInAYear } from './utils/savings-utils';
+import { calculateRepayments } from './utils/debt-utils';
 
-
-function calculateRepayments(debt, repay, interest, month = 1, valueSoFar = {}) {
-    if (debt > 0) {
-        const monthlyInterest = (debt * interest) / 12;
-        const newDebt = ((debt + monthlyInterest) - repay);
-        return calculateRepayments(newDebt, repay, interest, month + 1, {...valueSoFar, [month]: debt});
-    } else {
-        return {...valueSoFar, [month]: 0 };
-    }
-}
 
 function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
