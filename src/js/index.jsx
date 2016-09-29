@@ -3,9 +3,9 @@ import Vue from 'vue';
 import Chart from 'chart.js';
 import * as localStorageManager from '@lukeboyle/local-storage-manager';
 // Components
-import creditCardInput from '../components/credit-card-input.jsx';
-import savingsInput from '../components/savings-input.jsx';
-import bill from '../components/bill.jsx';
+import creditCardInput from './components/credit-card-input.jsx';
+import savingsInput from './components/savings-input.jsx';
+import bill from './components/bill.jsx';
 // Functions
 import { calculateSavingsInAYear } from './utils/savings-utils';
 import { calculateRepayments } from './utils/debt-utils';
