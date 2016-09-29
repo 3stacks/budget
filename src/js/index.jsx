@@ -9,6 +9,8 @@ import bill from './components/bill.jsx';
 // Functions
 import { calculateSavingsInAYear } from './utils/savings-utils';
 import { calculateRepayments } from './utils/debt-utils';
+// Constants
+import frequencyOptions from './constants/frequency';
 
 const viewState = {
     billFormData: {
@@ -40,12 +42,7 @@ const userData = {
     ],
 };
 
-const frequencyOptions = {
-    weekly: 52,
-    biWeekly: 26,
-    monthly: 12,
-    quarterly: 3,
-};
+
 
 function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
