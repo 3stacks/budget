@@ -129,11 +129,6 @@ function handleDeleteButtonPressed(billClickedIndex) {
     localStorageManager.set('userDebts', userData.debts);
 }
 
-if (process.NODE_ENV !== 'production') {
-    window.zz = viewState;
-    window.qq = userData;
-}
-
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 Vue.component('bill', bill);
@@ -150,7 +145,6 @@ const pageView = new Vue({
         handleSavingsCalculation
     },
     render () {
-        console.log(userData.debts);
         const h = this.$createElement;
         return (
             <div>
@@ -187,3 +181,7 @@ const pageView = new Vue({
     }
 });
 
+if (process.NODE_ENV !== 'production') {
+    window.zz = viewState;
+    window.qq = userData;
+}
