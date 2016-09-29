@@ -8,14 +8,6 @@ function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebit
         <div class="bill-input">
             <button on-click={handleDeleteButtonPressed.bind(this, index)}>&times;</button>
             <label>
-                Bill Name
-                <input type="text" name={`name-${index}`} on-change={handleDebitChanged} value={bill.name}/>
-            </label>
-            <label class="bill-input--value">
-                Bill Amount
-                <input type="text" name={`value-${index}`} on-change={handleDebitChanged} value={bill.value}/>
-            </label>
-            <label>
                 Bill Type
                 <select type="text" name={`type-${index}`} on-change={handleDebitChanged} selected={bill.type}>
                     {
@@ -25,25 +17,42 @@ function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebit
                     }
                 </select>
             </label>
+            <div>
+                <label>
+                    Bill Name
+                    <input type="text" name={`name-${index}`} on-change={handleDebitChanged} value={bill.name}/>
+                </label>
+            </div>
+            <div>
+                <label class="bill-input--value">
+                    Bill Amount
+                    <input type="text" name={`value-${index}`} on-change={handleDebitChanged} value={bill.value}/>
+                </label>
+            </div>
         </div>
     )
 }
 
-function renderReadBill(h, bill, index) {
+function renderReadBill(h, bill, index, income) {
     return (
-        <div class="bill">
+        <div class="bill" data-bill-type={bill.type.toLowerCase()}>
+            <span name={`type-${index}`} class="bill--type">
+                {bill.type}
+            </span>
             <span name={`name-${index}`} class="bill--name">
                 {bill.name}
             </span>
             <span name={`value-${index}`} class="bill--value">
                 ${bill.value}
             </span>
-            <span name={`type-${index}`} class="bill--type">
-                {bill.type}
+            <span>
+                ${income}
             </span>
         </div>
     )
 }
+
+let theIncome;
 
 export default {
     props: [
@@ -51,9 +60,11 @@ export default {
         'editMode',
         'handleAddDebitClicked',
         'handleDeleteButtonPressed',
-        'handleDebitChanged'
+        'handleDebitChanged',
+        'income'
     ],
     render(h) {
+        {theIncome = this.income}
         if (this.editMode) {
             return (
                 <div>
@@ -70,7 +81,8 @@ export default {
                 <div>
                     {
                         this.debts.map((bill, index) => {
-                            return renderReadBill(h, bill, index);
+                            theIncome = theIncome - bill.value;
+                            return renderReadBill(h, bill, index, theIncome);
                         })
                     }
                 </div>
