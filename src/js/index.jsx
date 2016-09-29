@@ -6,6 +6,7 @@ import * as localStorageManager from '@lukeboyle/local-storage-manager';
 import creditCardInput from './components/credit-card-input.jsx';
 import savingsInput from './components/savings-input.jsx';
 import bill from './components/bill.jsx';
+import inputIncome from './components/input-income.jsx';
 // Functions
 import { calculateSavingsInAYear } from './utils/savings-utils';
 import { calculateRepayments } from './utils/debt-utils';
@@ -29,9 +30,7 @@ const viewState = {
 };
 
 const userData = {
-    income: [
-        0
-    ],
+    income: 0,
     incomeFrequency: 'Weekly',
     debts: localStorageManager.get('userDebts') || [
         {
@@ -130,9 +129,16 @@ function handleDeleteButtonPressed(billClickedIndex) {
     localStorageManager.set('userDebts', userData.debts);
 }
 
+function handleIncomeInputChanged(event) {
+    userData.income = event.target.value;
+    pageView.$data.income = event.target.value;
+    localStorageManager.set('userIncome', userData.income);
+}
+
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 Vue.component('bill', bill);
+Vue.component('inputIncome', inputIncome);
 
 const pageView = new Vue({
     el: '#root',
@@ -150,8 +156,15 @@ const pageView = new Vue({
         return (
             <div>
                 <div class="income">
-                    <ul>
-                    </ul>
+                    {
+                        this.$data.editMode
+                        ?
+                            <inputIncome handle-income-input-changed={handleIncomeInputChanged}/>
+                        :
+                            <p>
+                                { userData.income }
+                            </p>
+                    }
                 </div>
                 <button on-click={handleEditModeButtonPressed}>Edit Mode</button>
                 <bill
