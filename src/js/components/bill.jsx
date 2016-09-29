@@ -66,11 +66,15 @@ export default {
                 </div>
             )
         } else {
-            {
-                this.debts.map((bill, index) => {
-                    return renderReadBill(h, bill, index);
-                })
-            }
+            return (
+                <div>
+                    {
+                        this.debts.map((bill, index) => {
+                            return renderReadBill(h, bill, index);
+                        })
+                    }
+                </div>
+            )
         }
     }
 }
