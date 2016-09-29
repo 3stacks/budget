@@ -114,6 +114,7 @@ function handleAddDebitClicked() {
         type: 'Bill',
         value: 0
     });
+    localStorageManager.set('userDebts', userData.debts);
 }
 
 function handleEditModeButtonPressed() {
