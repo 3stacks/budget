@@ -3,21 +3,21 @@ const availableTypes = [
     'Savings'
 ];
 
-export function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebitChanged) {
+function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebitChanged) {
     return (
         <div class="bill-input">
             <button on-click={handleDeleteButtonPressed.bind(this, index)}>&times;</button>
             <label>
                 Bill Name
-                <input type="text" name={`name-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.name}/>
+                <input type="text" name={`name-${index}`} on-change={handleDebitChanged} value={bill.name}/>
             </label>
             <label class="bill-input--value">
                 Bill Amount
-                <input type="text" name={`value-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} value={bill.value}/>
+                <input type="text" name={`value-${index}`} on-change={handleDebitChanged} value={bill.value}/>
             </label>
             <label>
                 Bill Type
-                <select type="text" name={`type-${index}`} on-change={handleDebitChanged.bind(this, bill, index)} selected={bill.type}>
+                <select type="text" name={`type-${index}`} on-change={handleDebitChanged} selected={bill.type}>
                     {
                         availableTypes.map((type) => {
                             return <option value={type}>{type}</option>;
@@ -28,7 +28,8 @@ export function renderBillInputs(h, bill, index, handleDeleteButtonPressed, hand
         </div>
     )
 }
-export function renderReadBill(h, bill, index) {
+
+function renderReadBill(h, bill, index) {
     return (
         <div class="bill">
             <span name={`name-${index}`} class="bill--name">
@@ -53,20 +54,23 @@ export default {
         'handleDebitChanged'
     ],
     render(h) {
-        console.log(this.editMode);
         if (this.editMode) {
             return (
                 <div>
-                    { this.debts.map((item, index) => {
-                        return renderBillInputs(h, item, index, this.handleDeleteButtonPressed, this.handleDebitChanged);
-                    }) }
+                    {
+                        this.debts.map((item, index) => {
+                            return renderBillInputs(h, item, index, this.handleDeleteButtonPressed, this.handleDebitChanged.bind(this, item, index));
+                        })
+                    }
                     <button on-click={this.handleAddDebitClicked}>Add Debit</button>
                 </div>
             )
         } else {
-            {this.debts.map((item, index) => {
-                return renderReadBill(h, item, index);
-            })}
+            {
+                this.debts.map((bill, index) => {
+                    return renderReadBill(h, bill, index);
+                })
+            }
         }
     }
 }
