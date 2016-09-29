@@ -30,7 +30,7 @@ const viewState = {
 };
 
 const userData = {
-    income: 0,
+    income: localStorageManager.get('userIncome') || 0,
     incomeFrequency: 'Weekly',
     debts: localStorageManager.get('userDebts') || [
         {
@@ -144,7 +144,8 @@ const pageView = new Vue({
     el: '#root',
     data: {
         debts: userData.debts,
-        editMode: viewState.editMode
+        editMode: viewState.editMode,
+        income: userData.income
     },
     methods: {
         handleDebitChanged,
@@ -159,20 +160,41 @@ const pageView = new Vue({
                     {
                         this.$data.editMode
                         ?
-                            <inputIncome handle-income-input-changed={handleIncomeInputChanged}/>
+                            <inputIncome income={ userData.income } handle-income-input-changed={handleIncomeInputChanged}/>
                         :
                             <p>
-                                { userData.income }
+                                Income: ${ userData.income }
                             </p>
                     }
                 </div>
                 <button on-click={handleEditModeButtonPressed}>Edit Mode</button>
+                {
+                    !this.$data.editMode
+                    ?
+                        <div class="bills-header">
+                            <p>
+                                Type
+                            </p>
+                            <p>
+                                Name
+                            </p>
+                            <p>
+                                Amount
+                            </p>
+                            <p>
+                                Amount Left
+                            </p>
+                        </div>
+                    :
+                        null
+                }
                 <bill
                     debts={this.$data.debts}
                     edit-mode={this.$data.editMode}
                     handle-add-debit-clicked={handleAddDebitClicked}
                     handle-delete-button-pressed={handleDeleteButtonPressed}
                     handle-debit-changed={handleDebitChanged}
+                    income={this.$data.income}
                 />
                 <credit-card-input
                     debt={viewState.billFormData.debt}
