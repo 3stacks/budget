@@ -155,7 +155,7 @@ const pageView = new Vue({
     render () {
         const h = this.$createElement;
         return (
-            <div>
+            <div class="budget-app">
                 <div class="income">
                     {
                         this.$data.editMode

@@ -3,12 +3,30 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.budget-app {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
 .bill-input,
 .bill {
-  width: 500px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin: 0 auto 15px;
+}
+
+.bill {
+  line-height: 40px;
+  padding: 0 10px;
+  &[data-bill-type="bill"] {
+    background-color: #e74c3c;
+  }
+  &[data-bill-type="savings"] {
+    background-color: #27ae60;
+    color: white;
+  }
 }
 
 .bill-input {
@@ -39,7 +57,7 @@ body {
 }
 
 .bills-header {
-  width: 500px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
