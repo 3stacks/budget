@@ -14,7 +14,8 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 0 auto 15px;
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(white, 0.4);
 }
 
 .bill {
@@ -26,6 +27,12 @@ body {
   &[data-bill-type="savings"] {
     background-color: #27ae60;
     color: white;
+  }
+  &--name,
+  &--type,
+  &--value,
+  &--income {
+    width: 25%;
   }
 }
 
@@ -61,4 +68,7 @@ body {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  p {
+    width: 25%;
+  }
 }
