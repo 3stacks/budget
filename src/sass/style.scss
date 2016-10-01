@@ -28,7 +28,6 @@ body {
   }
   &[data-bill-type="savings"] {
     background-color: #27ae60;
-    color: white;
   }
   &--name,
   &--type,
@@ -209,4 +208,16 @@ $primary-color: #34495e;
     background-color: $primary-color;
     color: white;
   }
+}
+
+.version {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 250px;
+  text-align: center;
+  line-height: 30px;
+  background-color: tomato;
+  transform: rotate(-30deg) translate(-25%, -50%);
+  font-size: 0.8rem;
 }
