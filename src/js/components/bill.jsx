@@ -82,7 +82,7 @@ export default {
                     {
                         this.debts.map((bill, index) => {
                             theIncome = theIncome - bill.value;
-                            return renderReadBill(h, bill, index, theIncome);
+                            return renderReadBill(h, bill, index, parseInt(theIncome));
                         })
                     }
                 </div>
