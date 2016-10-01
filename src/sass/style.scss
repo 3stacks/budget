@@ -71,7 +71,18 @@ body {
   p {
     width: 25%;
   }
-}.modal-popup {
+}
+
+@mixin remove-button-vendor-styles {
+  -webkit-appearance: none;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+$header-height: 60px;
+$primary-color: #34495e;
+
   &--content {
     position: fixed;
     max-width: 500px;
