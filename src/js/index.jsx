@@ -156,6 +156,7 @@ const pageView = new Vue({
         const h = this.$createElement;
         return (
             <div class="budget-app">
+                <button on-click={handleEditModeButtonPressed}>Edit Mode</button>
                 <div class="income">
                     {
                         this.$data.editMode
@@ -167,7 +168,6 @@ const pageView = new Vue({
                             </p>
                     }
                 </div>
-                <button on-click={handleEditModeButtonPressed}>Edit Mode</button>
                 {
                     !this.$data.editMode
                     ?
