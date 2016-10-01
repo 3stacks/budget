@@ -70,7 +70,7 @@
     "build-js": "webpack -d --config webpack.config.js --color --display-error-details --devtool=sourcemap",
     "build-styles": "node-sass ./src/sass --output ./dist",
     "build-images": "cp -a ./src/img ./dist",
-    "build-html": "cp -a ./src/html/ ./dist",
+    "build-html": "cp -a ./src/ ./dist",
     "watch": "npm run build && npm run watch-js & npm run watch-styles & npm run watch-images & npm run watch-html & npm run watch-fonts",
     "watch-js": "webpack --config webpack.config.js --progress --color --display-error-details --watch --debug --output-pathinfo",
     "watch-styles": "node-sass ./src/sass --output ./dist --watch",
