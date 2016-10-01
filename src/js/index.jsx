@@ -174,63 +174,87 @@ const pageView = new Vue({
     methods: {
         handleDebitChanged,
         handleCreditCardDebtCalculation,
-        handleSavingsCalculation
+        handleSavingsCalculation,
+        handleSavingsModalButtonPressed,
+        handleSavingsModalCloseRequested,
+        handleCreditModalButtonPressed,
+        handleCreditModalCloseRequested,
     },
     render () {
         const h = this.$createElement;
         return (
             <div class="budget-app">
-                <button on-click={handleEditModeButtonPressed}>Edit Mode</button>
-                <div class="income">
-                    {
-                        this.$data.editMode
-                        ?
-                            <inputIncome income={ userData.income } handle-income-input-changed={handleIncomeInputChanged}/>
-                        :
-                            <p>
-                                Income: ${ userData.income }
-                            </p>
-                    }
-                </div>
-                {
-                    !this.$data.editMode
-                    ?
-                        <div class="bills-header">
-                            <p>
-                                Type
-                            </p>
-                            <p>
-                                Name
-                            </p>
-                            <p>
-                                Amount
-                            </p>
-                            <p>
-                                Amount Left
-                            </p>
+                <header class="header">
+                    <div class="max-width-container">
+                        <div class="header--inner">
+                            <div class="header--site-name">
+                                Budget
+                            </div>
+                            <div class="header--buttons">
+                                <button class="header--piggy" on-click={handleSavingsModalButtonPressed}>
+                                    <img src="img/piggy.svg" alt="Savings Calculator"/>
+                                </button>
+                                <button class="header--credit-card" on-click={handleCreditModalButtonPressed}>
+                                    <img src="img/credit.svg" alt="Credit Card Calculator"/>
+                                </button>
+                                <button class="header--edit-mode" on-click={handleEditModeButtonPressed}>
+                                    <img src="img/gear.svg" alt="Edit Mode"/>
+                                </button>
+                            </div>
                         </div>
-                    :
-                        null
-                }
-                <bill
-                    debts={this.$data.debts}
-                    edit-mode={this.$data.editMode}
-                    handle-add-debit-clicked={handleAddDebitClicked}
-                    handle-delete-button-pressed={handleDeleteButtonPressed}
-                    handle-debit-changed={handleDebitChanged}
-                    income={this.$data.income}
-                />
+                    </div>
+                </header>
+                <div class="budget-app--inner">
+                    <div class="income">
+                        {
+                            this.$data.editMode
+                                ?
+                                <inputIncome income={ userData.income } handle-income-input-changed={handleIncomeInputChanged}/>
+                                :
+                                <p>
+                                    Income: ${ userData.income }
+                                </p>
+                        }
+                    </div>
+                    {
+                        !this.$data.editMode
+                            ?
+                            <div class="bills-header">
+                                <p>
+                                    Type
+                                </p>
+                                <p>
+                                    Name
+                                </p>
+                                <p>
+                                    Amount
+                                </p>
+                                <p>
+                                    Amount Left
+                                </p>
+                            </div>
+                            :
+                            null
+                    }
+                    <bill
+                        debts={this.$data.debts}
+                        edit-mode={this.$data.editMode}
+                        handle-add-debit-clicked={handleAddDebitClicked}
+                        handle-delete-button-pressed={handleDeleteButtonPressed}
+                        handle-debit-changed={handleDebitChanged}
+                        income={this.$data.income}
+                    />
                     {
                         this.$data.creditModalOpen
                         ?
                             <modal modal-title="Calculate credit card repayments" handle-close-requested={handleCreditModalCloseRequested}>
-                <credit-card-input
-                    debt={viewState.billFormData.debt}
-                    repay={viewState.billFormData.repay}
-                    rate={viewState.billFormData.rate}
+                                <credit-card-input
+                                    debt={viewState.billFormData.debt}
+                                    repay={viewState.billFormData.repay}
+                                    rate={viewState.billFormData.rate}
                                     handle-form-submit={handleCreditCardDebtCalculation.bind(this)}
-                    handle-input-changed={handleDebtFormChanged}
-                />
+                                    handle-input-changed={handleDebtFormChanged}
+                                />
                                 <canvas ref="creditChart"/>
                             </modal>
                         :
@@ -240,13 +264,13 @@ const pageView = new Vue({
                         this.$data.savingsModalOpen
                         ?
                             <modal modal-title="Calculate savings in a year" handle-close-requested={handleSavingsModalCloseRequested}>
-                <savings-input
-                    initial-savings={viewState.savingsFormData.savings}
-                    saving={viewState.savingsFormData.payment}
-                    rate={viewState.savingsFormData.rate}
+                                <savings-input
+                                    initial-savings={viewState.savingsFormData.savings}
+                                    saving={viewState.savingsFormData.payment}
+                                    rate={viewState.savingsFormData.rate}
                                     handle-form-submit={handleSavingsCalculation.bind(this)}
-                    handle-input-changed={handleSavingsFormChanged}
-                />
+                                    handle-input-changed={handleSavingsFormChanged}
+                                />
                                 <canvas ref="savingsChart"/>
                             </modal>
                         :

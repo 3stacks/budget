@@ -4,9 +4,11 @@ body {
 }
 
 .budget-app {
-  width: 100%;
-  max-width: 768px;
-  margin: 0 auto;
+  &--inner {
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+  }
 }
 
 .bill-input,
@@ -83,6 +85,48 @@ body {
 $header-height: 60px;
 $primary-color: #34495e;
 
+.header {
+  height: $header-height;
+  background-color: $primary-color;
+  width: 100%;
+  &--inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: $header-height;
+  }
+  &--site-name {
+    font-size: 1.7rem;
+    color: white;
+  }
+  &--buttons {
+    display: flex;
+    align-items: center;
+  }
+  &--piggy,
+  &--credit-card,
+  &--edit-mode {
+    @include remove-button-vendor-styles;
+    color: white;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+  button {
+    &:not(:last-of-type) {
+      margin-right: 15px;
+    }
+  }
+}
+
+.max-width-container {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.modal-popup {
   &--content {
     position: fixed;
     max-width: 500px;
@@ -125,6 +169,7 @@ $primary-color: #34495e;
     background-color: rgba(0, 0, 0, 0.4)
   }
 }
+
 .calculator-input {
   padding: 30px;
   display: flex;
