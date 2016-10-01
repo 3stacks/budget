@@ -45,7 +45,7 @@ function renderReadBill(h, bill, index, income) {
             <span name={`value-${index}`} class="bill--value">
                 ${bill.value}
             </span>
-            <span>
+            <span class="bill--income">
                 ${income}
             </span>
         </div>
