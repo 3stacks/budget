@@ -55,13 +55,7 @@
   ],
   "license": "MIT",
   "main": "src/js/index.js",
-  "maintainers": [
-    {
-      "name": "lukeboyle",
-      "email": "luke.boyle.au@gmail.com"
-    }
-  ],
-  "name": "react-now",
+  "name": "budget",
   "repository": {
     "type": "git",
     "url": "git+https://3stacks@github.com/3stacks/react-boilerplate.git"
@@ -84,5 +78,5 @@
     "watch-html": "cpx \"src/html/**/*\" dist --watch -v",
     "watch-fonts": "cpx \"src/fonts/*\" dist/fonts --watch -v"
   },
-  "version": "1.0.0"
+  "version": "0.0.1-alpha"
 }
