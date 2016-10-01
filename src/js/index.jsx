@@ -200,24 +200,26 @@ const pageView = new Vue({
                                 <button class="header--credit-card" on-click={handleCreditModalButtonPressed}>
                                     <img src="img/credit.svg" alt="Credit Card Calculator"/>
                                 </button>
-                                <button class="header--edit-mode" on-click={handleEditModeButtonPressed}>
-                                    <img src="img/gear.svg" alt="Edit Mode"/>
-                                </button>
                             </div>
                         </div>
                     </div>
                 </header>
                 <div class="budget-app--inner">
-                    <div class="income">
-                        {
-                            this.$data.editMode
-                                ?
-                                <inputIncome income={ userData.income } handle-income-input-changed={handleIncomeInputChanged}/>
-                                :
-                                <p>
-                                    Income: ${ userData.income }
-                                </p>
-                        }
+                    <div class="budget-app--inner--head">
+                        <div class="budget-app--inner--head--income">
+                            {
+                                this.$data.editMode
+                                    ?
+                                    <inputIncome income={ userData.income } handle-income-input-changed={handleIncomeInputChanged}/>
+                                    :
+                                    <p>
+                                        Income: ${ userData.income }
+                                    </p>
+                            }
+                        </div>
+                        <button class="budget-app--inner--head--edit" on-click={handleEditModeButtonPressed}>
+                            <img src="img/gear.svg" alt="Edit Mode"/>
+                        </button>
                     </div>
                     {
                         !this.$data.editMode
