@@ -7,6 +7,7 @@ import creditCardInput from './components/credit-card-input.jsx';
 import savingsInput from './components/savings-input.jsx';
 import bill from './components/bill.jsx';
 import inputIncome from './components/input-income.jsx';
+import modal from './components/modal.jsx';
 // Functions
 import { calculateSavingsInAYear } from './utils/savings-utils';
 import { calculateRepayments } from './utils/debt-utils';
@@ -26,7 +27,9 @@ const viewState = {
     },
     creditRepayment: {},
     savingsAmount: {},
-    editMode: false
+    editMode: false,
+    savingsModalOpen: false,
+    creditModalOpen: false
 };
 
 const userData = {
@@ -41,15 +44,13 @@ const userData = {
     ],
 };
 
-
-
 function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
     const debt = parseInt(viewState.billFormData.debt) * 100;
     const repayment = parseInt(viewState.billFormData.repay) * 100;
     const rate = parseInt(viewState.billFormData.rate) / 100;
     viewState.creditRepayment = calculateRepayments(debt, repayment, rate);
-    const creditChart = new Chart(document.getElementById('credit_chart'), {
+    const creditChart = new Chart(this.$refs.creditChart, {
         type: 'line',
         data: {
             labels: Object.keys(viewState.creditRepayment),
@@ -72,7 +73,7 @@ function handleSavingsCalculation(event) {
     const payment = parseInt(viewState.savingsFormData.payment) * 100;
     const rate = parseInt(viewState.savingsFormData.rate) / 100;
     viewState.savingsAmount = calculateSavingsInAYear(savings, payment, rate);
-    const savingsCart = new Chart(document.getElementById('savings_chart'), {
+    const savingsCart = new Chart(this.$refs.savingsChart, {
         type: 'line',
         data: {
             labels: Object.keys(viewState.savingsAmount),
@@ -135,17 +136,40 @@ function handleIncomeInputChanged(event) {
     localStorageManager.set('userIncome', userData.income);
 }
 
+function handleCreditModalButtonPressed() {
+    viewState.creditModalOpen = true;
+    pageView.$data.creditModalOpen = true;
+}
+
+function handleCreditModalCloseRequested() {
+    viewState.creditModalOpen = false;
+    pageView.$data.creditModalOpen = false;
+}
+
+function handleSavingsModalButtonPressed() {
+    viewState.savingsModalOpen = true;
+    pageView.$data.savingsModalOpen = true;
+}
+
+function handleSavingsModalCloseRequested() {
+    viewState.savingsModalOpen = false;
+    pageView.$data.savingsModalOpen = false;
+}
+
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 Vue.component('bill', bill);
 Vue.component('inputIncome', inputIncome);
+Vue.component('modal', modal);
 
 const pageView = new Vue({
     el: '#root',
     data: {
         debts: userData.debts,
         editMode: viewState.editMode,
-        income: userData.income
+        income: userData.income,
+        creditModalOpen: viewState.creditModalOpen,
+        savingsModalOpen: viewState.savingsModalOpen
     },
     methods: {
         handleDebitChanged,
@@ -196,22 +220,39 @@ const pageView = new Vue({
                     handle-debit-changed={handleDebitChanged}
                     income={this.$data.income}
                 />
+                    {
+                        this.$data.creditModalOpen
+                        ?
+                            <modal modal-title="Calculate credit card repayments" handle-close-requested={handleCreditModalCloseRequested}>
                 <credit-card-input
                     debt={viewState.billFormData.debt}
                     repay={viewState.billFormData.repay}
                     rate={viewState.billFormData.rate}
-                    handle-form-submit={handleCreditCardDebtCalculation}
+                                    handle-form-submit={handleCreditCardDebtCalculation.bind(this)}
                     handle-input-changed={handleDebtFormChanged}
                 />
-                <canvas id="credit_chart" width="400" height="400"/>
+                                <canvas ref="creditChart"/>
+                            </modal>
+                        :
+                            null
+                    }
+                    {
+                        this.$data.savingsModalOpen
+                        ?
+                            <modal modal-title="Calculate savings in a year" handle-close-requested={handleSavingsModalCloseRequested}>
                 <savings-input
                     initial-savings={viewState.savingsFormData.savings}
                     saving={viewState.savingsFormData.payment}
                     rate={viewState.savingsFormData.rate}
-                    handle-form-submit={handleSavingsCalculation}
+                                    handle-form-submit={handleSavingsCalculation.bind(this)}
                     handle-input-changed={handleSavingsFormChanged}
                 />
-                <canvas id="savings_chart" width="400" height="400"/>
+                                <canvas ref="savingsChart"/>
+                            </modal>
+                        :
+                            null
+                    }
+                </div>
             </div>
         )
     }
