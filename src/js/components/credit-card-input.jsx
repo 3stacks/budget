@@ -8,20 +8,26 @@ export default {
     ],
     render(h) {
     return (
-        <form ref="billForm">
-            <label style={{display: 'block'}}>
-                Current Debt
+        <form ref="billForm" class="calculator-input">
+            <label>
+                <span>
+                    Current Debt
+                </span>
                 <input type="number" value={this.debt} on-change={this.handleInputChanged.bind(this, 'debt')}/>
             </label>
-            <label style={{display: 'block'}}>
-                Interest Rate
+            <label>
+                <span>
+                    Interest Rate
+                </span>
                 <input type="number" value={this.rate} on-change={this.handleInputChanged.bind(this, 'rate')}/>
             </label>
-            <label style={{display: 'block'}}>
-                Monthly Repayment
+            <label>
+                <span>
+                    Monthly Repayment
+                </span>
                 <input type="number" value={this.repay} on-change={this.handleInputChanged.bind(this, 'repay')}/>
             </label>
-            <button type="button" style={{display: 'block'}} on-click={this.handleFormSubmit.bind(this)}>
+            <button type="button" on-click={this.handleFormSubmit.bind(this)}>
                 Submit
             </button>
         </form>
