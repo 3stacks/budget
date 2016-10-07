@@ -1,6 +1,7 @@
 const availableTypes = [
     'Bill',
-    'Savings'
+    'Savings',
+    'Credit'
 ];
 
 function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebitChanged) {
@@ -9,13 +10,15 @@ function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebit
             <button on-click={handleDeleteButtonPressed.bind(this, index)}>&times;</button>
             <label>
                 Bill Type
-                <select type="text" name={`type-${index}`} on-change={handleDebitChanged} selected={bill.type}>
-                    {
-                        availableTypes.map((type) => {
-                            return <option value={type}>{type}</option>;
-                        })
-                    }
-                </select>
+                <div class="select-wrapper">
+                    <select type="text" name={`type-${index}`} on-change={handleDebitChanged} selected={bill.type}>
+                        {
+                            availableTypes.map((type) => {
+                                return <option value={type}>{type}</option>;
+                            })
+                        }
+                    </select>
+                </div>
             </label>
             <div>
                 <label>
@@ -24,7 +27,7 @@ function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebit
                 </label>
             </div>
             <div>
-                <label class="bill-input--value">
+                <label class="bill-input--value dollar-label">
                     Bill Amount
                     <input type="text" name={`value-${index}`} on-change={handleDebitChanged} value={bill.value}/>
                 </label>
@@ -81,7 +84,11 @@ export default {
                 <div>
                     {
                         this.debts.map((bill, index) => {
-                            theIncome = theIncome - bill.value;
+                            if (bill.type === 'Credit') {
+                                theIncome = theIncome + parseInt(bill.value);
+                            } else {
+                                theIncome = theIncome - parseInt(bill.value);
+                            }
                             return renderReadBill(h, bill, index, parseInt(theIncome));
                         })
                     }
