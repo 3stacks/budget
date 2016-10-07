@@ -213,7 +213,7 @@ const pageView = new Vue({
                                     <inputIncome income={ userData.income } handle-income-input-changed={handleIncomeInputChanged}/>
                                     :
                                     <p>
-                                        Income: ${ userData.income }
+                                        <span>Income: </span><span>${ userData.income }</span>
                                     </p>
                             }
                         </div>
