@@ -11,10 +11,10 @@ function renderBillInputs(h, bill, index, handleDeleteButtonPressed, handleDebit
             <label>
                 Bill Type
                 <div class="select-wrapper">
-                    <select type="text" name={`type-${index}`} on-change={handleDebitChanged} selected={bill.type}>
+                    <select type="text" name={`type-${index}`} on-change={handleDebitChanged}>
                         {
                             availableTypes.map((type) => {
-                                return <option value={type}>{type}</option>;
+                                return <option value={type} selected={bill.type === type}>{type}</option>;
                             })
                         }
                     </select>
