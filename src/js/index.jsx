@@ -156,6 +156,10 @@ function handleSavingsModalCloseRequested() {
     pageView.$data.savingsModalOpen = false;
 }
 
+function handleExportButtonPressed() {
+    console.log('todo');
+}
+
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 Vue.component('bill', bill);
@@ -179,6 +183,7 @@ const pageView = new Vue({
         handleSavingsModalCloseRequested,
         handleCreditModalButtonPressed,
         handleCreditModalCloseRequested,
+        handleExportButtonPressed
     },
     render () {
         const h = this.$createElement;
@@ -194,6 +199,9 @@ const pageView = new Vue({
                                 Budget
                             </div>
                             <div class="header--buttons">
+                                <button class="header--export" on-click={handleExportButtonPressed}>
+                                    <img src="img/export.svg" alt="Export"/>
+                                </button>
                                 <button class="header--piggy" on-click={handleSavingsModalButtonPressed}>
                                     <img src="img/piggy.svg" alt="Savings Calculator"/>
                                 </button>
