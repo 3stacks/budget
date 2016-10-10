@@ -62,6 +62,7 @@ export default {
         'debts',
         'editMode',
         'handleAddDebitClicked',
+        'handleSaveDebitsClicked',
         'handleDeleteButtonPressed',
         'handleDebitChanged',
         'income'
@@ -77,6 +78,7 @@ export default {
                         })
                     }
                     <button on-click={this.handleAddDebitClicked}>Add Debit</button>
+                    <button on-click={this.handleSaveDebitsClicked}>Save Changes</button>
                 </div>
             )
         } else {

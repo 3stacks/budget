@@ -160,6 +160,10 @@ function handleExportButtonPressed() {
     console.log('todo');
 }
 
+function handleSaveDebitsClicked() {
+    handleEditModeButtonPressed();
+}
+
 Vue.component('credit-card-input', creditCardInput);
 Vue.component('savings-input', savingsInput);
 Vue.component('bill', bill);
@@ -183,7 +187,8 @@ const pageView = new Vue({
         handleSavingsModalCloseRequested,
         handleCreditModalButtonPressed,
         handleCreditModalCloseRequested,
-        handleExportButtonPressed
+        handleExportButtonPressed,
+        handleSaveDebitsClicked
     },
     render () {
         const h = this.$createElement;
@@ -256,6 +261,7 @@ const pageView = new Vue({
                         handle-delete-button-pressed={handleDeleteButtonPressed}
                         handle-debit-changed={handleDebitChanged}
                         income={this.$data.income}
+                        handle-save-debits-clicked={handleSaveDebitsClicked}
                     />
                     {
                         this.$data.creditModalOpen
