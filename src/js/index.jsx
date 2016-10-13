@@ -33,9 +33,9 @@ const viewState = {
 };
 
 const userData = {
-    income: localStorageManager.get('userIncome') || 0,
+    income: localStorageManager.get('userIncome', 'budgetApp') || 0,
     incomeFrequency: 'Weekly',
-    debts: localStorageManager.get('userDebts') || [
+    debts: localStorageManager.get('userDebts','budgetApp') || [
         {
             name: 'New Debit',
             type: 'Bill',
@@ -105,7 +105,7 @@ function handleDebitChanged(item, index, event) {
         ...userData.debts[index],
         [whichValue]: event.target.value
     };
-    localStorageManager.set('userDebts', userData.debts);
+    localStorageManager.set('userDebts', userData.debts, 'budgetApp');
 }
 
 function handleAddDebitClicked() {
@@ -114,7 +114,7 @@ function handleAddDebitClicked() {
         type: 'Bill',
         value: 0
     });
-    localStorageManager.set('userDebts', userData.debts);
+    localStorageManager.set('userDebts', userData.debts, 'budgetApp');
 }
 
 function handleEditModeButtonPressed() {
@@ -127,13 +127,13 @@ function handleDeleteButtonPressed(billClickedIndex) {
         return billClickedIndex !== index;
     });
     pageView.$data.debts = userData.debts;
-    localStorageManager.set('userDebts', userData.debts);
+    localStorageManager.set('userDebts', userData.debts, 'budgetApp');
 }
 
 function handleIncomeInputChanged(event) {
     userData.income = event.target.value;
     pageView.$data.income = event.target.value;
-    localStorageManager.set('userIncome', userData.income);
+    localStorageManager.set('userIncome', userData.income, 'budgetApp');
 }
 
 function handleCreditModalButtonPressed() {
