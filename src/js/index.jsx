@@ -115,6 +115,8 @@ function handleAddDebitClicked() {
         value: 0
     });
     localStorageManager.set('userDebts', userData.debts, 'budgetApp');
+    const billTypeList = document.querySelectorAll('.bill-input--type');
+    billTypeList[billTypeList.length - 1].focus();
 }
 
 function handleEditModeButtonPressed() {
