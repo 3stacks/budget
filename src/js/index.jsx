@@ -33,16 +33,32 @@ const viewState = {
 };
 
 const userData = {
-    income: localStorageManager.get('userIncome', 'budgetApp') || 0,
+    income: safelyGetIncome(),
     incomeFrequency: 'Weekly',
-    debts: localStorageManager.get('userDebts','budgetApp') || [
-        {
-            name: 'New Debit',
-            type: 'Bill',
-            value: 0
-        }
-    ],
+    debts: safelyGetDebits(),
 };
+
+function safelyGetIncome() {
+    if (localStorageManager.get('userIncome', 'budgetApp') === null) {
+        return 0;
+    } else {
+        return localStorageManager.get('userIncome', 'budgetApp');
+    }
+}
+
+function safelyGetDebits() {
+    if (localStorageManager.get('userDebts', 'budgetApp') === null) {
+        return [
+            {
+                name: 'New Debit',
+                type: 'Bill',
+                value: 0
+            }
+        ];
+    } else {
+        return localStorageManager.get('userDebts','budgetApp');
+    }
+}
 
 function handleCreditCardDebtCalculation(event) {
     event.preventDefault();
