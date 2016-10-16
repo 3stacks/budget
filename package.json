@@ -6,7 +6,7 @@
     "url": "https://github.com/3stacks/react-boilerplate/issues"
   },
   "dependencies": {
-    "@lukeboyle/local-storage-manager": "^2.1.0",
+    "@lukeboyle/local-storage-manager": "^2.1.6",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "chart.js": "^2.3.0",
     "react": "^15.0.2",
