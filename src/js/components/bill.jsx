@@ -89,7 +89,11 @@ export default {
                             if (bill.type === 'Credit') {
                                 theIncome = theIncome + parseInt(bill.value);
                             } else {
-                                theIncome = theIncome - parseInt(bill.value);
+                                if (bill.value.includes('%')) {
+                                    
+                                } else {
+                                    theIncome = theIncome - parseInt(bill.value);
+                                }
                             }
                             return renderReadBill(h, bill, index, parseInt(theIncome));
                         })
