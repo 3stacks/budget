@@ -77,5 +77,5 @@
     "watch-html": "cpx \"src/html/**/*\" dist --watch -v",
     "watch-fonts": "cpx \"src/fonts/*\" dist/fonts --watch -v"
   },
-  "version": "0.0.1-alpha"
+  "version": "0.0.3-alpha"
 }
