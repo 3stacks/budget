@@ -46,7 +46,7 @@ function renderReadBill(h, bill, index, income) {
                 {bill.name}
             </span>
             <span name={`value-${index}`} class="bill--value">
-                ${bill.value}
+                {bill.value.includes('%') ? `${bill.value}` : `$${bill.value}`}
             </span>
             <span class="bill--income">
                 ${income}
@@ -87,15 +87,16 @@ export default {
                     {
                         this.debts.map((bill, index) => {
                             if (bill.type === 'Credit') {
-                                theIncome = theIncome + parseInt(bill.value);
+                                theIncome = theIncome + parseInt(bill.value, 10);
                             } else {
                                 if (bill.value.includes('%')) {
-                                    
+                                    const percentage = bill.value.slice(0, bill.value.length - 1);
+                                    theIncome = theIncome - theIncome / 100 * parseInt(percentage, 10);
                                 } else {
-                                    theIncome = theIncome - parseInt(bill.value);
+                                    theIncome = theIncome - parseInt(bill.value, 10);
                                 }
                             }
-                            return renderReadBill(h, bill, index, parseInt(theIncome));
+                            return renderReadBill(h, bill, index, parseInt(theIncome, 10));
                         })
                     }
                 </div>
