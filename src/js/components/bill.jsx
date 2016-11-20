@@ -72,14 +72,18 @@ export default {
         if (this.editMode) {
             return (
                 <div>
-                    {
-                        this.debts.map((item, index) => {
-                            return renderBillInputs(h, item, index, this.handleDeleteButtonPressed, this.handleDebitChanged.bind(this, item, index));
-                        })
-                    }
-                    <button on-click={this.handleAddDebitClicked}>Add Debit</button>
-                    <button on-click={this.handleSaveDebitsClicked}>Save Changes</button>
-                </div>
+					<div class="bill-input--container">
+						{
+							this.debts.map((item, index) => {
+								return renderBillInputs(h, item, index, this.handleDeleteButtonPressed, this.handleDebitChanged.bind(this, item, index));
+							})
+						}
+					</div>
+					<div class="bill-button--container">
+						<button class="bill-button" on-click={this.handleAddDebitClicked}>Add Debit</button>
+						<button class="bill-button" on-click={this.handleSaveDebitsClicked}>Save Changes</button>
+					</div>
+				</div>
             )
         } else {
             return (
