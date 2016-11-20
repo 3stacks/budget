@@ -174,21 +174,23 @@ function handleSavingsModalCloseRequested() {
     pageView.$data.savingsModalOpen = false;
 }
 
-// function handleExportButtonPressed() {
-//     const data = {
-//         income: localStorageManager.get('userIncome', 'budgetApp'),
-//         bills: localStorageManager.get('userDebts', 'budgetApp')
-//     };
-//     let csvBase = "data:text/csv;charset=utf-8,";
-//     csvBase = `${csvBase}\nUser Income\n${data.income}\n`;
-//     const dataAsCsv = data.map(function(infoArray, index) {
-//
-//         dataString = infoArray.join(",");
-//         csvContent += index < data.length ? dataString+ "\n" : dataString;
-//
-//     });
-//     download(`userDebts${new Date().getDate()}`, props.spec.toString());
-// }
+function handleExportButtonPressed() {
+    const data = {
+        income: localStorageManager.get('userIncome', 'budgetApp'),
+        bills: localStorageManager.get('userDebts', 'budgetApp')
+    };
+
+    alert(`Copy this string to your clipboard and save it: ${JSON.stringify(data)}`);
+    // let csvBase = "data:text/csv;charset=utf-8,";
+    // csvBase = `${csvBase}\nUser Income\n${data.income}\n`;
+    // const dataAsCsv = data.map(function(infoArray, index) {
+    //
+    //     dataString = infoArray.join(",");
+    //     csvContent += index < data.length ? dataString+ "\n" : dataString;
+    //
+    // });
+    // download(`userDebts${new Date().getDate()}`, props.spec.toString());
+}
 //
 // /**
 //  * @see http://stackoverflow.com/a/18197511/1063035
@@ -237,7 +239,7 @@ const pageView = new Vue({
         handleSavingsModalCloseRequested,
         handleCreditModalButtonPressed,
         handleCreditModalCloseRequested,
-        // handleExportButtonPressed,
+        handleExportButtonPressed,
         handleSaveDebitsClicked
     },
     render () {
@@ -245,7 +247,7 @@ const pageView = new Vue({
         return (
             <div class="budget-app">
                 <div class="version">
-                    Alpha Version 0.0.2
+                    Alpha Version 0.0.3
                 </div>
                 <header class="header">
                     <div class="max-width-container">
@@ -254,9 +256,9 @@ const pageView = new Vue({
                                 Budget
                             </div>
                             <div class="header--buttons">
-                                {/*<button class="header--export" on-click={handleExportButtonPressed}>*/}
-                                    {/*<img src="img/export.svg" alt="Export"/>*/}
-                                {/*</button>*/}
+                                <button class="header--export" on-click={handleExportButtonPressed}>
+                                    <img src="img/export.svg" alt="Export"/>
+                                </button>
                                 <button class="header--piggy" on-click={handleSavingsModalButtonPressed}>
                                     <img src="img/piggy.svg" alt="Savings Calculator"/>
                                 </button>
