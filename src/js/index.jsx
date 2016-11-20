@@ -174,41 +174,41 @@ function handleSavingsModalCloseRequested() {
     pageView.$data.savingsModalOpen = false;
 }
 
-function handleExportButtonPressed() {
-    const data = {
-        income: localStorageManager.get('userIncome', 'budgetApp'),
-        bills: localStorageManager.get('userDebts', 'budgetApp')
-    };
-    let csvBase = "data:text/csv;charset=utf-8,";
-    csvBase = `${csvBase}\nUser Income\n${data.income}\n`;
-    const dataAsCsv = data.map(function(infoArray, index) {
-
-        dataString = infoArray.join(",");
-        csvContent += index < data.length ? dataString+ "\n" : dataString;
-
-    });
-    download(`userDebts${new Date().getDate()}`, props.spec.toString());
-}
-
-/**
- * @see http://stackoverflow.com/a/18197511/1063035
- * @param filename
- * @param text
- */
-function download(filename, text) {
-    var pom = document.createElement('a');
-    pom.setAttribute('href', 'data:text/markdown;charset=utf-8,' + encodeURIComponent(text));
-    pom.setAttribute('download', filename);
-
-    if (document.createEvent) {
-        var event = document.createEvent('MouseEvents');
-        event.initEvent('click', true, true);
-        pom.dispatchEvent(event);
-    }
-    else {
-        pom.click();
-    }
-}
+// function handleExportButtonPressed() {
+//     const data = {
+//         income: localStorageManager.get('userIncome', 'budgetApp'),
+//         bills: localStorageManager.get('userDebts', 'budgetApp')
+//     };
+//     let csvBase = "data:text/csv;charset=utf-8,";
+//     csvBase = `${csvBase}\nUser Income\n${data.income}\n`;
+//     const dataAsCsv = data.map(function(infoArray, index) {
+//
+//         dataString = infoArray.join(",");
+//         csvContent += index < data.length ? dataString+ "\n" : dataString;
+//
+//     });
+//     download(`userDebts${new Date().getDate()}`, props.spec.toString());
+// }
+//
+// /**
+//  * @see http://stackoverflow.com/a/18197511/1063035
+//  * @param filename
+//  * @param text
+//  */
+// function download(filename, text) {
+//     var pom = document.createElement('a');
+//     pom.setAttribute('href', 'data:text/markdown;charset=utf-8,' + encodeURIComponent(text));
+//     pom.setAttribute('download', filename);
+//
+//     if (document.createEvent) {
+//         var event = document.createEvent('MouseEvents');
+//         event.initEvent('click', true, true);
+//         pom.dispatchEvent(event);
+//     }
+//     else {
+//         pom.click();
+//     }
+// }
 
 function handleSaveDebitsClicked() {
     handleEditModeButtonPressed();
@@ -237,7 +237,7 @@ const pageView = new Vue({
         handleSavingsModalCloseRequested,
         handleCreditModalButtonPressed,
         handleCreditModalCloseRequested,
-        handleExportButtonPressed,
+        // handleExportButtonPressed,
         handleSaveDebitsClicked
     },
     render () {
@@ -254,9 +254,9 @@ const pageView = new Vue({
                                 Budget
                             </div>
                             <div class="header--buttons">
-                                <button class="header--export" on-click={handleExportButtonPressed}>
-                                    <img src="img/export.svg" alt="Export"/>
-                                </button>
+                                {/*<button class="header--export" on-click={handleExportButtonPressed}>*/}
+                                    {/*<img src="img/export.svg" alt="Export"/>*/}
+                                {/*</button>*/}
                                 <button class="header--piggy" on-click={handleSavingsModalButtonPressed}>
                                     <img src="img/piggy.svg" alt="Savings Calculator"/>
                                 </button>
