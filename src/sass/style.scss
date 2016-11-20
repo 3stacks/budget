@@ -1,8 +1,8 @@
 @mixin remove-button-vendor-styles {
-  -webkit-appearance: none;
-  border: none;
-  background: transparent;
-  outline: none;
+	-webkit-appearance: none;
+	border: none;
+	background: transparent;
+	outline: none;
 }
 
 $header-height: 60px;
@@ -10,284 +10,305 @@ $primary-color: #34495e;
 
 
 body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .budget-app {
-  &--inner {
-    padding: 30px 0;
-    width: 100%;
-    max-width: 768px;
-    margin: 0 auto;
-    &--head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      &--edit {
-        @include remove-button-vendor-styles;
-        width: 40px;
-        height: 40px;
-        padding: 0;
-      }
-      &--income {
-        p {
-          span {
-            display: block;
-          }
-        }
-      }
-    }
-  }
+	&--inner {
+		padding: 30px 0;
+		width: 100%;
+		max-width: 768px;
+		margin: 0 auto;
+		&--head {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			&--edit {
+				@include remove-button-vendor-styles;
+				width: 40px;
+				height: 40px;
+				padding: 0;
+			}
+			&--income {
+				p {
+					span {
+						display: block;
+					}
+				}
+			}
+		}
+	}
 }
 
 .bill-input,
 .bill {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  border-bottom: 1px solid rgba(white, 0.4);
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 auto;
+	border-bottom: 1px solid rgba(white, 0.4);
 }
 
 .bill {
-  line-height: 40px;
-  padding: 0 10px;
-  &[data-bill-type="bill"] {
-    background-color: #e74c3c;
-  }
-  &[data-bill-type="savings"] {
-    background-color: #00d1b2;
-  }
-  &[data-bill-type="credit"] {
-    background-color: #27ae60;
-  }
-  &--name,
-  &--type,
-  &--value,
-  &--income {
-    width: 25%;
-  }
+	line-height: 40px;
+	padding: 0 10px;
+	&[data-bill-type="bill"] {
+		background-color: #e74c3c;
+	}
+	&[data-bill-type="savings"] {
+		background-color: #00d1b2;
+	}
+	&[data-bill-type="credit"] {
+		background-color: #27ae60;
+	}
+	&--name,
+	&--type,
+	&--value,
+	&--income {
+		width: 25%;
+	}
 }
 
 .bill-input {
-  button {
-    -webkit-appearance: none;
-    border: none;
-    background: transparent;
-    font-size: 2rem;
-  }
-  label {
-    display: block;
-    select,
-    input {
-      display: block;
-      padding: 0 15px;
-      max-width: 100%;
-    }
-  }
+	&--container {
+		margin-bottom: 1rem;
+	}
+
+	button {
+		-webkit-appearance: none;
+		border: none;
+		background: transparent;
+		font-size: 2rem;
+	}
+	label {
+		display: block;
+		select,
+		input {
+			display: block;
+			padding: 0 15px;
+			max-width: 100%;
+		}
+	}
 }
 
 label {
-  position: relative;
-  input,
-  select {
-    margin: 5px 0 10px;
-    height: 30px;
-    line-height: 30px;
-  }
-  select {
-    display: block;
-    -webkit-appearance: none;
-    border-radius: 0;
-    background: transparent;
-  }
-  .select-wrapper {
-    display: block;
-    position: relative;
-    &:after {
-      border-width: 0 5px 5px 5px;
-      border-color: transparent black black black;
-      position: absolute;
-      top: 50%;
-      right: 15px;
-      transform: translateY(-50%);
-    }
-  }
+	position: relative;
+	input,
+	select {
+		margin: 5px 0 10px;
+		height: 30px;
+		line-height: 30px;
+	}
+	select {
+		display: block;
+		-webkit-appearance: none;
+		border-radius: 0;
+		background: transparent;
+	}
+	.select-wrapper {
+		display: block;
+		position: relative;
+		&:after {
+			border-width: 0 5px 5px 5px;
+			border-color: transparent black black black;
+			position: absolute;
+			top: 50%;
+			right: 15px;
+			transform: translateY(-50%);
+		}
+	}
 }
 
 .dollar-label {
-  position: relative;
-  display: block;
-  &:before {
-    content: "$";
-    position: absolute;
-    top: 28px;
-    left: 5px;
-  }
-  input {
-    display: block;
-    padding: 5px 15px;
-  }
+	position: relative;
+	display: block;
+	&:before {
+		content: "$";
+		position: absolute;
+		top: 28px;
+		left: 5px;
+	}
+	input {
+		display: block;
+		padding: 5px 15px;
+	}
 }
 
 .bills-header {
-  width: 100%;
-  padding: 0 10px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  p {
-    width: 25%;
-  }
+	width: 100%;
+	padding: 0 10px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	p {
+		width: 25%;
+	}
 }
 
 .header {
-  height: $header-height;
-  background-color: $primary-color;
-  width: 100%;
-  &--inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: $header-height;
-  }
-  &--site-name {
-    font-size: 1.7rem;
-    color: white;
-  }
-  &--buttons {
-    display: flex;
-    align-items: center;
-  }
-  &--piggy,
-  &--credit-card,
-  &--edit-mode {
-    @include remove-button-vendor-styles;
-    color: white;
-    font-size: 1.5rem;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-  }
-  button {
-    &:not(:last-of-type) {
-      margin-right: 15px;
-    }
-  }
+	height: $header-height;
+	background-color: $primary-color;
+	width: 100%;
+	&--inner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: $header-height;
+	}
+	&--site-name {
+		font-size: 1.7rem;
+		color: white;
+	}
+	&--buttons {
+		display: flex;
+		align-items: center;
+
+		button {
+			@include remove-button-vendor-styles;
+			color: white;
+			font-size: 1.5rem;
+		}
+	}
+	&--export,
+	&--piggy,
+	&--credit-card,
+	&--edit-mode {
+		width: 40px;
+		height: 40px;
+		padding: 0;
+	}
+	button {
+		&:not(:last-of-type) {
+			margin-right: 15px;
+		}
+	}
 }
 
 .max-width-container {
-  width: 100%;
-  max-width: 768px;
-  margin: 0 auto;
+	width: 100%;
+	max-width: 768px;
+	margin: 0 auto;
 }
 
 .modal-popup {
-  &--content {
-    position: fixed;
-    max-width: 500px;
-    z-index: 3;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    background-color: white;
-    border-radius: 3px;
-    display: flex;
-    flex-direction: column;
-    &--transclude {
-      &--body {
-        padding: 30px;
-      }
-    }
-    &--meta {
-      background-color: $primary-color;
-      padding: 0 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-      height: $header-height;
-      &--header {
-        margin: 0;
-        font-weight: normal;
-      }
-      &--close {
-        color: white;
-        @include remove-button-vendor-styles;
-        font-size: 2rem;
-        position: relative;
-      }
-    }
-  }
-  &--backdrop {
-    position: fixed;
-    z-index: 2;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4)
-  }
+	&--content {
+		position: fixed;
+		max-width: 500px;
+		z-index: 3;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 50%;
+		background-color: white;
+		border-radius: 3px;
+		display: flex;
+		flex-direction: column;
+		&--transclude {
+			&--body {
+				padding: 30px;
+			}
+		}
+		&--meta {
+			background-color: $primary-color;
+			padding: 0 30px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			color: white;
+			height: $header-height;
+			&--header {
+				margin: 0;
+				font-weight: normal;
+			}
+			&--close {
+				color: white;
+				@include remove-button-vendor-styles;
+				font-size: 2rem;
+				position: relative;
+			}
+		}
+	}
+	&--backdrop {
+		position: fixed;
+		z-index: 2;
+		left: 0;
+		top: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.4)
+	}
 }
 
 canvas {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 .calculator-input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  label {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-    margin-bottom: 15px;
-    span {
-      flex: 1 0 auto;
-      margin-right: 10px;
-      width: 30%;
-    }
-    input {
-      width: 100%;
-      height: 30px;
-      padding: 0 15px;
-      font-size: 0.8rem;
-      border: 1px solid rgba(black, 0.3);
-      outline: none;
-      &:focus {
-        border: 1px solid black;
-      }
-      &:not(:last-child) {
-        margin-bottom: 15px;
-      }
-    }
-  }
-  button {
-    @include remove-button-vendor-styles;
-    font-size: 1rem;
-    line-height: 30px;
-    padding: 0 10px;
-    background-color: $primary-color;
-    color: white;
-  }
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	label {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		align-items: center;
+		margin-bottom: 15px;
+		span {
+			flex: 1 0 auto;
+			margin-right: 10px;
+			width: 30%;
+		}
+		input {
+			width: 100%;
+			height: 30px;
+			padding: 0 15px;
+			font-size: 0.8rem;
+			border: 1px solid rgba(black, 0.3);
+			outline: none;
+			&:focus {
+				border: 1px solid black;
+			}
+			&:not(:last-child) {
+				margin-bottom: 15px;
+			}
+		}
+	}
+	button {
+		@include remove-button-vendor-styles;
+		font-size: 1rem;
+		line-height: 30px;
+		padding: 0 10px;
+		background-color: $primary-color;
+		color: white;
+	}
 }
 
 .version {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 250px;
-  text-align: center;
-  line-height: 30px;
-  background-color: tomato;
-  transform: rotate(-30deg) translate(-28%, -60%);
-  font-size: 0.8rem;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 250px;
+	text-align: center;
+	line-height: 30px;
+	background-color: tomato;
+	transform: rotate(-30deg) translate(-28%, -60%);
+	font-size: 0.8rem;
+}
+
+.bill-button {
+
+	@include remove-button-vendor-styles;
+	border: 1px solid $primary-color;
+	margin-right: 25px;
+
+	&--container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
