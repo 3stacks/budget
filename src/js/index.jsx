@@ -247,7 +247,7 @@ const pageView = new Vue({
         return (
             <div class="budget-app">
                 <div class="version">
-                    Alpha Version 0.0.3
+                    Alpha Version 0.0.4
                 </div>
                 <header class="header">
                     <div class="max-width-container">
